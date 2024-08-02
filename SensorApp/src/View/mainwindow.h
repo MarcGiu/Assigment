@@ -2,18 +2,18 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QVector>
-#include "adddialog.h"
+#include <QGridLayout>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QAction>
+#include "searchwidget.h"
+#include "detailswidget.h"
+#include "graphwidget.h"
 #include "editdialog.h"
-#include "Sensor/SensorInfo.h"
-#include <QListWidgetItem>
+#include "adddialog.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -21,17 +21,30 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_add_button_clicked();
-    void on_edit_button_clicked();
-    void on_sensorList_itemDoubleClicked(QListWidgetItem *item);
+    void openEditDialog();
+    void openAddDialog();
 
 private:
-    Ui::MainWindow *ui;
-    //
-    AddDialog *addDialog;
-    EditDialog *editDialog;
-    QVector<SensorInfo> sensors;
-    //
-    void updateSensorList();
+    QWidget *centralWidget;
+    QGridLayout *mainGridLayout;
+    SearchWidget *sensorSearchWidget;
+    DetailsWidget *sensorDetailsWidget;
+    GraphWidget *graphWidget;
+    QMenuBar *menuBar;
+    QMenu *fileMenu;
+    QMenu *editMenu;
+    QMenu *runMenu;
+    QStatusBar *statusBar;
+    QToolBar *toolBar;
+    QAction *newAction;
+    QAction *openAction;
+    QAction *saveAction;
+    QAction *addSensorAction;
+    QAction *editSensorAction;
+    QAction *deleteSensorAction;
+    QScopedPointer<EditDialog> editDialog;
+    QScopedPointer<AddDialog> addDialog;
 };
+
 #endif // MAINWINDOW_H
+

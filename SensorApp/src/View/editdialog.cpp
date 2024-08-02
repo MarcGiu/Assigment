@@ -1,56 +1,56 @@
-#include "editdialog.h"
-#include "ui_editdialog.h"
+#include "EditDialog.h"
 
 EditDialog::EditDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::EditDialog)
+    QDialog(parent)
 {
-    ui->setupUi(this);
-}
+    this->setWindowTitle("Dialog");
+    this->resize(544, 360);
 
-EditDialog::~EditDialog()
-{
-    delete ui;
-}
+    QGridLayout *gridLayout = new QGridLayout(this);
 
-void EditDialog::setSensorInfo(const SensorInfo &sensor) {
-    setSensorType(sensor.type);
-    ui->name_edit->setText(sensor.name);
-    ui->locat_edit->setText(sensor.location);
-    ui->unit_comboBox->setCurrentText(sensor.unit);
-    ui->accur_edit->setText(QString::number(sensor.accuracy));
-    ui->descr_edit->setPlainText(sensor.description);
-}
+    QLabel *type_label = new QLabel("Type", this);
+    gridLayout->addWidget(type_label, 0, 0);
 
-void EditDialog::setSensorType(const QString& type) {
-    ui->type_edit->setText(type);
-    ui->type_edit->setReadOnly(true);
-}
+    type_edit = new QLineEdit(this);
+    gridLayout->addWidget(type_edit, 0, 1, 1, 3);
 
-QString EditDialog::getSensorName() const {
-    return ui->name_edit->text();
-}
+    QLabel *name_label = new QLabel("Name", this);
+    gridLayout->addWidget(name_label, 1, 0);
 
-QString EditDialog::getSensorLocation() const {
-    return ui->locat_edit->text();
-}
+    name_edit = new QLineEdit(this);
+    gridLayout->addWidget(name_edit, 1, 1, 1, 3);
 
-QString EditDialog::getSensorUnit() const {
-    return ui->unit_comboBox->currentText();
-}
+    QLabel *locat_label = new QLabel("Location", this);
+    gridLayout->addWidget(locat_label, 2, 0);
 
-float EditDialog::getSensorAccuracy() const {
-    return ui->accur_edit->text().toFloat();
-}
+    locat_edit = new QLineEdit(this);
+    gridLayout->addWidget(locat_edit, 2, 1, 1, 3);
 
-QString EditDialog::getSensorDescription() const {
-    return ui->descr_edit->toPlainText();
-}
+    QLabel *unit_label = new QLabel("Unit of measurement", this);
+    gridLayout->addWidget(unit_label, 3, 0);
 
-void EditDialog::on_ok_button_clicked() {
-    accept();
-}
+    unit_comboBox = new QComboBox(this);
+    unit_comboBox->setContextMenuPolicy(Qt::NoContextMenu);
+    gridLayout->addWidget(unit_comboBox, 3, 1, 1, 3);
 
-void EditDialog::on_cancel_button_clicked() {
-    reject();
+    QLabel *accur_label = new QLabel("Accuracy", this);
+    gridLayout->addWidget(accur_label, 4, 0);
+
+    accur_edit = new QLineEdit(this);
+    gridLayout->addWidget(accur_edit, 4, 1, 1, 3);
+
+    QLabel *descr_label = new QLabel("Description", this);
+    gridLayout->addWidget(descr_label, 5, 0);
+
+    descr_edit = new QTextEdit(this);
+    gridLayout->addWidget(descr_edit, 5, 1, 1, 3);
+
+    QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    gridLayout->addItem(horizontalSpacer, 6, 0, 1, 2);
+
+    ok_button = new QPushButton("Ok", this);
+    gridLayout->addWidget(ok_button, 6, 2);
+
+    cancel_button = new QPushButton("Cancel", this);
+    gridLayout->addWidget(cancel_button, 6, 3);
 }

@@ -1,78 +1,106 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "editdialog.h"
-#include "adddialog.h"
-#include <QMessageBox>
-#include <QListWidgetItem>
+#include <QSpacerItem>
+#include <QIcon>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-    , addDialog(new AddDialog(this))
-    , editDialog(new EditDialog(this))
-{
-    ui->setupUi(this);
+    : QMainWindow(parent) {
 
-    connect(ui->sensorList, &QListWidget::itemDoubleClicked, this, &MainWindow::on_sensorList_itemDoubleClicked);
-    connect(ui->add_button, &QPushButton::clicked, this, &MainWindow::on_add_button_clicked);
-    connect(ui->edit_button, &QPushButton::clicked, this, &MainWindow::on_edit_button_clicked);
+    // Central Widget
+    centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+
+    // Main Grid Layout
+    mainGridLayout = new QGridLayout(centralWidget);
+
+    // Sensor Search Widget
+    sensorSearchWidget = new SearchWidget(centralWidget);
+    mainGridLayout->addWidget(sensorSearchWidget, 0, 3, 3, 1);
+    connect(sensorSearchWidget, &SearchWidget::addButtonClicked, this, &MainWindow::openAddDialog);
+
+
+    // Sensor Details Widget
+    sensorDetailsWidget = new DetailsWidget(centralWidget);
+    mainGridLayout->addWidget(sensorDetailsWidget, 0, 0, 1, 2);
+    connect(sensorDetailsWidget, &DetailsWidget::editButtonClicked, this, &MainWindow::openEditDialog);
+
+    // Graph Widget
+    graphWidget = new GraphWidget(centralWidget);
+    mainGridLayout->addWidget(graphWidget, 2, 0, 1, 2);
+
+    // Lines
+    QFrame *verticalLine = new QFrame(centralWidget);
+    verticalLine->setFrameShape(QFrame::VLine);
+    mainGridLayout->addWidget(verticalLine, 0, 2, 3, 1);
+
+    QFrame *horizontalLine = new QFrame(centralWidget);
+    horizontalLine->setFrameShape(QFrame::HLine);
+    mainGridLayout->addWidget(horizontalLine, 1, 0, 1, 2);
+
+    // Menubar
+    menuBar = new QMenuBar(this);
+    setMenuBar(menuBar);
+    fileMenu = new QMenu("File", this);
+    editMenu = new QMenu("Edit", this);
+    runMenu = new QMenu("Run", this);
+    menuBar->addMenu(fileMenu);
+    menuBar->addMenu(editMenu);
+    menuBar->addMenu(runMenu);
+
+    // Statusbar
+    statusBar = new QStatusBar(this);
+    setStatusBar(statusBar);
+
+    // Toolbar
+    toolBar = addToolBar("Tool Bar");
+
+    // Actions for file menu
+    newAction = new QAction("New", this);
+    newAction->setIcon(QIcon(":/img/Assets/newfile.png"));
+    fileMenu->addAction(newAction);
+    toolBar->addAction(newAction);
+
+    openAction = new QAction("Open", this);
+    openAction->setIcon(QIcon(":/img/Assets/open.png"));
+    fileMenu->addAction(openAction);
+    toolBar->addAction(openAction);
+
+    saveAction = new QAction("Save", this);
+    saveAction->setIcon(QIcon(":/img/Assets/save.png"));
+    fileMenu->addAction(saveAction);
+    toolBar->addAction(saveAction);
+
+    // Actions for edit menu
+    addSensorAction = new QAction("Add Sensor", this);
+    addSensorAction->setIcon(QIcon(":/img/Assets/add.png"));
+    editMenu->addAction(addSensorAction);
+    connect(addSensorAction, &QAction::triggered, this, &MainWindow::openAddDialog);
+
+    editSensorAction = new QAction("Edit Sensor", this);
+    editSensorAction->setIcon(QIcon(":/img/Assets/edit.png"));
+    editMenu->addAction(editSensorAction);
+    connect(editSensorAction, &QAction::triggered, this, &MainWindow::openEditDialog);
+
+    deleteSensorAction = new QAction("Delete Sensor", this);
+    deleteSensorAction->setIcon(QIcon(":/img/Assets/delete.png"));
+    editMenu->addAction(deleteSensorAction);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete addDialog;
-    delete editDialog;
+MainWindow::~MainWindow() {
+    // Destructor
 }
 
-void MainWindow::on_add_button_clicked()
-{
-    if (addDialog->exec() == QDialog::Accepted) {
-        SensorInfo sensor;
-        sensor.type = addDialog->getSensorType();
-        sensor.name = addDialog->getSensorName();
-        sensor.location = addDialog->getSensorLocation();
-        sensor.unit = addDialog->getSensorUnit();
-        sensor.accuracy = addDialog->getSensorAccuracy();
-        sensor.description = addDialog->getSensorDescription();
-
-        sensors.append(sensor);
-        updateSensorList();
+void MainWindow::openEditDialog() {
+    if (!editDialog) {
+        editDialog.reset(new EditDialog(this));
     }
+    editDialog->exec();
 }
 
-void MainWindow::on_edit_button_clicked()
-{
-    QListWidgetItem *item = ui->sensorList->currentItem();
-    if (!item) {
-        QMessageBox::warning(this, "Edit Sensor", "Please select a sensor to edit.");
-        return;
+void MainWindow::openAddDialog() {
+    if (!addDialog) {
+        addDialog.reset(new AddDialog(this));
     }
-
-    int index = ui->sensorList->row(item);
-    SensorInfo &sensor = sensors[index];
-
-    editDialog->setSensorInfo(sensor);
-    if (editDialog->exec() == QDialog::Accepted) {
-        sensor.name = editDialog->getSensorName();
-        sensor.location = editDialog->getSensorLocation();
-        sensor.unit = editDialog->getSensorUnit();
-        sensor.accuracy = editDialog->getSensorAccuracy();
-        sensor.description = editDialog->getSensorDescription();
-
-        updateSensorList();
-    }
+    addDialog->exec();
 }
 
-void MainWindow::on_sensorList_itemDoubleClicked(QListWidgetItem *item)
-{
-    on_edit_button_clicked();
-}
 
-void MainWindow::updateSensorList()
-{
-    ui->sensorList->clear();
-    for (const SensorInfo &sensor : sensors) {
-        ui->sensorList->addItem(sensor.name);
-    }
-}

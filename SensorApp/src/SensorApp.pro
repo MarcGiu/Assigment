@@ -13,9 +13,12 @@ SOURCES += \
     Sensor/CO2Sensor.cpp \
     Sensor/HumiditySensor.cpp \
     Sensor/TemperatureSensor.cpp \
+    View/graphwidget.cpp \
+    View/detailswidget.cpp \
     View/adddialog.cpp \
     View/editdialog.cpp \
     View/mainwindow.cpp \
+    View/searchwidget.cpp \
     main.cpp
 
 
@@ -28,14 +31,15 @@ HEADERS += \
     Sensor/SensorInfo.h \
     Sensor/SensorObserver.h \
     Sensor/TemperatureSensor.h \
+    View/detailswidget.h \
+    View/graphwidget.h \
     View/adddialog.h \
     View/editdialog.h \
     View/mainwindow.h \
+    View/searchwidget.h \
     mainwindow.h
 
 FORMS += \
-    Ui/adddialog.ui \
-    Ui/editdialog.ui \
     Ui/mainwindow.ui
 
 # Default rules for deployment.

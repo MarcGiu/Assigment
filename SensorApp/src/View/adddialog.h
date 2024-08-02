@@ -2,10 +2,12 @@
 #define ADDDIALOG_H
 
 #include <QDialog>
-
-namespace Ui {
-class AddDialog;
-}
+#include <QComboBox>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
 
 class AddDialog : public QDialog
 {
@@ -13,16 +15,16 @@ class AddDialog : public QDialog
 
 public:
     explicit AddDialog(QWidget *parent = nullptr);
-    ~AddDialog();
-    QString getSensorType() const;
-    QString getSensorName() const;
-    QString getSensorLocation() const;
-    QString getSensorUnit() const;
-    float getSensorAccuracy() const;
-    QString getSensorDescription() const;
 
 private:
-    Ui::AddDialog *ui;
+    QComboBox *type_comboBox;
+    QLineEdit *name_edit;
+    QLineEdit *locat_edit;
+    QComboBox *unit_comboBox;
+    QLineEdit *accur_edit;
+    QTextEdit *descr_edit;
+    QPushButton *ok_button;
+    QPushButton *cancel_button;
 };
 
 #endif // ADDDIALOG_H

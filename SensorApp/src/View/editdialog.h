@@ -2,11 +2,12 @@
 #define EDITDIALOG_H
 
 #include <QDialog>
-#include "Sensor/SensorInfo.h"
-
-namespace Ui {
-class EditDialog;
-}
+#include <QComboBox>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
 
 class EditDialog : public QDialog
 {
@@ -14,21 +15,16 @@ class EditDialog : public QDialog
 
 public:
     explicit EditDialog(QWidget *parent = nullptr);
-    ~EditDialog();
-    void setSensorInfo(const SensorInfo &sensor);
-    void setSensorType(const QString& type);
-    QString getSensorName() const;
-    QString getSensorLocation() const;
-    QString getSensorUnit() const;
-    float getSensorAccuracy() const;
-    QString getSensorDescription() const;
-
-private slots:
-    void on_ok_button_clicked();
-    void on_cancel_button_clicked();
 
 private:
-    Ui::EditDialog *ui;
+    QLineEdit *type_edit;
+    QLineEdit *name_edit;
+    QLineEdit *locat_edit;
+    QComboBox *unit_comboBox;
+    QLineEdit *accur_edit;
+    QTextEdit *descr_edit;
+    QPushButton *ok_button;
+    QPushButton *cancel_button;
 };
 
 #endif // EDITDIALOG_H
