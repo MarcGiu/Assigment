@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>Assets/co2.png</file>
+        <file>Assets/delete.png</file>
+        <file>Assets/edit.png</file>
+        <file>Assets/humidity.png</file>
+        <file>Assets/add.png</file>
+        <file>Assets/newfile.png</file>
+        <file>Assets/open.png</file>
+        <file>Assets/run.png</file>
+        <file>Assets/save.png</file>
+        <file>Assets/temperature.png</file>
+        <file>Assets/filter.png</file>
+        <file>Assets/search.png</file>
+    </qresource>
+</RCC>

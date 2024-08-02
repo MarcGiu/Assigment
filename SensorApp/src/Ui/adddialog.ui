@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddDialog</class>
+ <widget class="QDialog" name="AddDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>536</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="type_label">
+     <property name="text">
+      <string>Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
+    <widget class="QComboBox" name="type_comboBox">
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="name_label">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="3">
+    <widget class="QLineEdit" name="name_edit"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="locat_label">
+     <property name="text">
+      <string>Location</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="3">
+    <widget class="QLineEdit" name="locat_edit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="unit_label">
+     <property name="text">
+      <string>Unit of measurement</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="3">
+    <widget class="QComboBox" name="unit_comboBox">
+     <property name="contextMenuPolicy">
+      <enum>Qt::NoContextMenu</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="accur_label">
+     <property name="text">
+      <string>Accuracy</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="3">
+    <widget class="QLineEdit" name="accur_edit"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="descr_label">
+     <property name="text">
+      <string>Description</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="3">
+    <widget class="QTextEdit" name="descr_edit"/>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>268</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="ok_button">
+     <property name="text">
+      <string>Ok</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
