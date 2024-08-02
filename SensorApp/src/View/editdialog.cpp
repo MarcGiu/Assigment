@@ -1,4 +1,4 @@
-#include "EditDialog.h"
+#include "editdialog.h"
 
 EditDialog::EditDialog(QWidget *parent) :
     QDialog(parent)

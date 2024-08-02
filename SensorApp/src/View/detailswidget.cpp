@@ -1,4 +1,4 @@
-#include "DetailsWidget.h"
+#include "detailswidget.h"
 #include <QIcon>
 
 DetailsWidget::DetailsWidget(QWidget *parent)

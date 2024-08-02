@@ -1,4 +1,4 @@
-#include "GraphWidget.h"
+#include "graphwidget.h"
 #include <QSpacerItem>
 #include <QIcon>
 
