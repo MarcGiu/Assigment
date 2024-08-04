@@ -1,49 +1,47 @@
 #include "editdialog.h"
+#include "sensorfieldvisitor.h"
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QComboBox>
+#include <QGridLayout>
 
-EditDialog::EditDialog(QWidget *parent) :
-    QDialog(parent)
+EditDialog::EditDialog(AbstractSensor& sensor, QWidget *parent) :
+    QDialog(parent), sensor(sensor)
 {
     this->setWindowTitle("Dialog");
     this->resize(544, 360);
 
     QGridLayout *gridLayout = new QGridLayout(this);
 
-    QLabel *type_label = new QLabel("Type", this);
-    gridLayout->addWidget(type_label, 0, 0);
-
-    type_edit = new QLineEdit(this);
-    gridLayout->addWidget(type_edit, 0, 1, 1, 3);
-
     QLabel *name_label = new QLabel("Name", this);
-    gridLayout->addWidget(name_label, 1, 0);
+    gridLayout->addWidget(name_label, 0, 0);
 
     name_edit = new QLineEdit(this);
-    gridLayout->addWidget(name_edit, 1, 1, 1, 3);
+    gridLayout->addWidget(name_edit, 0, 1, 1, 3);
 
     QLabel *locat_label = new QLabel("Location", this);
-    gridLayout->addWidget(locat_label, 2, 0);
+    gridLayout->addWidget(locat_label, 1, 0);
 
     locat_edit = new QLineEdit(this);
-    gridLayout->addWidget(locat_edit, 2, 1, 1, 3);
-
-    QLabel *unit_label = new QLabel("Unit of measurement", this);
-    gridLayout->addWidget(unit_label, 3, 0);
-
-    unit_comboBox = new QComboBox(this);
-    unit_comboBox->setContextMenuPolicy(Qt::NoContextMenu);
-    gridLayout->addWidget(unit_comboBox, 3, 1, 1, 3);
+    gridLayout->addWidget(locat_edit, 1, 1, 1, 3);
 
     QLabel *accur_label = new QLabel("Accuracy", this);
-    gridLayout->addWidget(accur_label, 4, 0);
+    gridLayout->addWidget(accur_label, 2, 0);
 
     accur_edit = new QLineEdit(this);
-    gridLayout->addWidget(accur_edit, 4, 1, 1, 3);
+    gridLayout->addWidget(accur_edit, 2, 1, 1, 3);
 
     QLabel *descr_label = new QLabel("Description", this);
-    gridLayout->addWidget(descr_label, 5, 0);
+    gridLayout->addWidget(descr_label, 3, 0);
 
     descr_edit = new QTextEdit(this);
-    gridLayout->addWidget(descr_edit, 5, 1, 1, 3);
+    gridLayout->addWidget(descr_edit, 3, 1, 1, 3);
+
+    SensorFieldVisitor visitor(gridLayout);
+    visitor.setStartRow(4);
+    sensor.accept(visitor);
 
     QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     gridLayout->addItem(horizontalSpacer, 6, 0, 1, 2);

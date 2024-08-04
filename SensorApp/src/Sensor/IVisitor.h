@@ -7,10 +7,10 @@ class CO2Sensor;
 
 class IVisitor {
   public:
-    virtual ~IVisitor() {};
-    virtual void visit(TemperatureSensor& temperature_sensor) = 0;
-    virtual void visit(HumiditySensor& humidity_sensor) = 0;
-    virtual void visit(CO2Sensor& co2_sensor) = 0;
+    virtual ~IVisitor() = default;
+    virtual void visitTemperature(TemperatureSensor& temperature_sensor) = 0;
+    virtual void visitHumidity(HumiditySensor& humidity_sensor) = 0;
+    virtual void visitCO2(CO2Sensor& co2_sensor) = 0;
 };
 
 #endif

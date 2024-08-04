@@ -27,9 +27,9 @@ float CO2Sensor::generateData() const {
 }
 
 void CO2Sensor::accept(IConstVisitor& visitor) const {
-    visitor.visit(*this);
+    visitor.visitCO2(*this);
 }
 
 void CO2Sensor::accept(IVisitor& visitor) {
-    visitor.visit(*this);
+    visitor.visitCO2(*this);
 }

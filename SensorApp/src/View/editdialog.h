@@ -1,6 +1,8 @@
 #ifndef EDITDIALOG_H
 #define EDITDIALOG_H
 
+#include "sensorfieldvisitor.h"
+#include "Sensor/AbstractSensor.h"
 #include <QDialog>
 #include <QComboBox>
 #include <QLineEdit>
@@ -14,13 +16,12 @@ class EditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditDialog(QWidget *parent = nullptr);
+    EditDialog(AbstractSensor& sensor, QWidget *parent = nullptr);
 
 private:
-    QLineEdit *type_edit;
+    AbstractSensor& sensor;
     QLineEdit *name_edit;
     QLineEdit *locat_edit;
-    QComboBox *unit_comboBox;
     QLineEdit *accur_edit;
     QTextEdit *descr_edit;
     QPushButton *ok_button;

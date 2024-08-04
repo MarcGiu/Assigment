@@ -25,23 +25,29 @@ private slots:
     void openAddDialog();
 
 private:
+    std::vector<std::unique_ptr<AbstractSensor>> sensors;
+
     QWidget *centralWidget;
     QGridLayout *mainGridLayout;
+
     SearchWidget *sensorSearchWidget;
     DetailsWidget *sensorDetailsWidget;
     GraphWidget *graphWidget;
+
     QMenuBar *menuBar;
     QMenu *fileMenu;
     QMenu *editMenu;
     QMenu *runMenu;
     QStatusBar *statusBar;
     QToolBar *toolBar;
+
     QAction *newAction;
     QAction *openAction;
     QAction *saveAction;
     QAction *addSensorAction;
     QAction *editSensorAction;
     QAction *deleteSensorAction;
+
     QScopedPointer<EditDialog> editDialog;
     QScopedPointer<AddDialog> addDialog;
 };

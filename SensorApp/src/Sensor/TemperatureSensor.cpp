@@ -37,9 +37,9 @@ float TemperatureSensor::generateData() const {
 }
 
 void TemperatureSensor::accept(IConstVisitor& visitor) const {
-    visitor.visit(*this);
+    visitor.visitTemperature(*this);
 }
 
 void TemperatureSensor::accept(IVisitor& visitor) {
-    visitor.visit(*this);
+    visitor.visitTemperature(*this);
 }

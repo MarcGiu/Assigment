@@ -28,10 +28,10 @@ float HumiditySensor::generateData() const {
 }
 
 void HumiditySensor::accept(IConstVisitor& visitor) const {
-    visitor.visit(*this);
+    visitor.visitHumidity(*this);
 }
 
 void HumiditySensor::accept(IVisitor& visitor) {
-    visitor.visit(*this);
+    visitor.visitHumidity(*this);
 }
 

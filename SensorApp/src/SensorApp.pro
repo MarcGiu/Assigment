@@ -19,6 +19,7 @@ SOURCES += \
     View/editdialog.cpp \
     View/mainwindow.cpp \
     View/searchwidget.cpp \
+    View/sensorfieldvisitor.cpp \
     main.cpp
 
 
@@ -37,6 +38,7 @@ HEADERS += \
     View/editdialog.h \
     View/mainwindow.h \
     View/searchwidget.h \
+    View/sensorfieldvisitor.h \
     mainwindow.h
 
 # Default rules for deployment.

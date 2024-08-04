@@ -47,3 +47,10 @@ SearchWidget::SearchWidget(QWidget *parent)
     sensorScrollArea->setWidget(sensorScrollAreaWidgetContents);
     sensorListLayout->addWidget(sensorScrollArea, 2, 0, 1, 4);
 }
+
+void SearchWidget::updateSensorList(const std::vector<std::unique_ptr<AbstractSensor>>& sensors) {
+    sensorList->clear();
+    for (const auto& sensor : sensors) {
+        sensorList->addItem(sensor->getName());
+    }
+}

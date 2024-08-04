@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include <QSpacerItem>
 #include <QIcon>
+#include "Sensor/TemperatureSensor.h"
+#include "Sensor/CO2Sensor.h"
+#include "Sensor/HumiditySensor.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -83,6 +87,18 @@ MainWindow::MainWindow(QWidget *parent)
     deleteSensorAction = new QAction("Delete Sensor", this);
     deleteSensorAction->setIcon(QIcon(":/img/Assets/delete.png"));
     editMenu->addAction(deleteSensorAction);
+
+
+
+
+    // Esempio di aggiunta di un sensore al vettore
+    sensors.push_back(std::make_unique<CO2Sensor>());
+    sensors.push_back(std::make_unique<HumiditySensor>());
+    sensors.push_back(std::make_unique<TemperatureSensor>());
+
+    // Popolare il SearchWidget con i sensori
+    sensorSearchWidget->updateSensorList(sensors);
+
 }
 
 MainWindow::~MainWindow() {
@@ -91,7 +107,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::openEditDialog() {
     if (!editDialog) {
-        editDialog.reset(new EditDialog(this));
+        editDialog.reset(new EditDialog(*sensors[0], this));
     }
     editDialog->exec();
 }
