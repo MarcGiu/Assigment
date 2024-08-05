@@ -8,10 +8,6 @@
 #include <QPushButton>
 #include <QScrollArea>
 #include <QListWidget>
-
-#include <QWidget>
-#include <vector>
-#include <memory>
 #include "Sensor/AbstractSensor.h"
 
 class SearchWidget : public QWidget {

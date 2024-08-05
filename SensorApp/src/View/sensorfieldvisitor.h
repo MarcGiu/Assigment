@@ -2,7 +2,6 @@
 #define SENSORFIELDVISITOR_H
 
 #include "Sensor/IVisitor.h"
-#include "Sensor/IConstVisitor.h"
 #include <QGridLayout>
 
 class SensorFieldVisitor : public IVisitor {

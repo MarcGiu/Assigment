@@ -4,6 +4,7 @@
 #include <QComboBox>
 
 void SensorFieldVisitor::visitCO2(CO2Sensor& sensor) {
+
     QLabel* unitLabel = new QLabel("Unit");
     QComboBox* unitComboBox = new QComboBox();
     unitComboBox->addItems({"ppm"});
@@ -12,6 +13,7 @@ void SensorFieldVisitor::visitCO2(CO2Sensor& sensor) {
 }
 
 void SensorFieldVisitor::visitHumidity(HumiditySensor& sensor) {
+
     QLabel* unitLabel = new QLabel("Unit");
     QComboBox* unitComboBox = new QComboBox();
     unitComboBox->addItems({"%"});
@@ -29,6 +31,7 @@ void SensorFieldVisitor::visitHumidity(HumiditySensor& sensor) {
 }
 
 void SensorFieldVisitor::visitTemperature(TemperatureSensor& sensor) {
+
     QLabel* unitLabel = new QLabel("Unit");
     QComboBox* unitComboBox = new QComboBox();
     unitComboBox->addItems({"°C", "°F", "K"});

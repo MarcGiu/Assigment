@@ -1,9 +1,13 @@
 #include "searchwidget.h"
 #include <QSpacerItem>
 #include <QIcon>
+#include <QLabel>
+#include "sensordetailvisitor.h"
 
 SearchWidget::SearchWidget(QWidget *parent)
     : QWidget(parent) {
+
+    setFixedWidth(300);
 
     // Sensor List Layout
     sensorListLayout = new QGridLayout(this);
@@ -50,7 +54,27 @@ SearchWidget::SearchWidget(QWidget *parent)
 
 void SearchWidget::updateSensorList(const std::vector<std::unique_ptr<AbstractSensor>>& sensors) {
     sensorList->clear();
-    for (const auto& sensor : sensors) {
-        sensorList->addItem(sensor->getName());
-    }
+        for (const std::unique_ptr<AbstractSensor>& sensor : sensors) {
+
+            QWidget *itemWidget = new QWidget();
+
+            QGridLayout *gridLayout = new QGridLayout(itemWidget);
+
+            SensorDetailVisitor detailVisitor(gridLayout, itemWidget);
+            sensor->accept(detailVisitor);
+
+            QLabel* nameLabel = new QLabel(QString("%1").arg(sensor->getName()));
+            nameLabel->setStyleSheet("font-weight: bold; font-size: 14px;");
+            QLabel* idLabel = new QLabel(QString("Id: %1").arg(sensor->getId()));
+            QLabel* accLabel = new QLabel(QString("Accuracy: %1").arg(sensor->getAccuracy()));
+            QLabel* locLabel = new QLabel(QString("Location: %1").arg(sensor->getLocation()));
+            gridLayout->addWidget(nameLabel, 0, 4, 1, 8);
+            gridLayout->addWidget(idLabel, 1, 4, 1, 8);
+            gridLayout->addWidget(accLabel, 2, 4, 1, 8);
+            gridLayout->addWidget(locLabel, 3, 4, 1, 8);
+
+            QListWidgetItem *listItem = new QListWidgetItem(sensorList);
+            listItem->setSizeHint(QSize(sensorList->width(), itemWidget->sizeHint().height()));
+            sensorList->setItemWidget(listItem, itemWidget);
+        }
 }

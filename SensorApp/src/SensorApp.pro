@@ -19,6 +19,7 @@ SOURCES += \
     View/editdialog.cpp \
     View/mainwindow.cpp \
     View/searchwidget.cpp \
+    View/sensordetailvisitor.cpp \
     View/sensorfieldvisitor.cpp \
     main.cpp
 
@@ -38,6 +39,7 @@ HEADERS += \
     View/editdialog.h \
     View/mainwindow.h \
     View/searchwidget.h \
+    View/sensordetailvisitor.h \
     View/sensorfieldvisitor.h \
     mainwindow.h
 

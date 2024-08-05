@@ -26,6 +26,7 @@ private:
     QTextEdit *descr_edit;
     QPushButton *ok_button;
     QPushButton *cancel_button;
+    QGridLayout *gridLayout;
 };
 
 #endif // EDITDIALOG_H

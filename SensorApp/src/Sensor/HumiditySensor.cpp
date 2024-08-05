@@ -13,6 +13,32 @@ HumiditySensor::HumiditySensor(const QString& name, const QString& description, 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
+float HumiditySensor::getMinValue() const {
+    return minHum;
+}
+
+HumiditySensor& HumiditySensor::setMinValue(const float min) {
+    if (min < 0.0) {
+        this->minHum = 0;
+    }
+    this->minHum = min;
+    return *this;
+}
+
+
+float HumiditySensor::getMaxValue() const {
+    return maxHum;
+}
+
+HumiditySensor& HumiditySensor::setMaxValue(const float max) {
+    if (max > 100.0) {
+        this->maxHum = 100;
+    }
+    this->maxHum = max;
+    return *this;
+}
+
+
 float HumiditySensor::generateData() const {
     // Genera un valore casuale tra minHum e maxHum percentuale di umidità
     float humidity = minHum + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (maxHum-minHum)));

@@ -10,10 +10,10 @@
 EditDialog::EditDialog(AbstractSensor& sensor, QWidget *parent) :
     QDialog(parent), sensor(sensor)
 {
-    this->setWindowTitle("Dialog");
-    this->resize(544, 360);
+    this->setWindowTitle("Edit Sensor");
+    this->resize(600, 400);
 
-    QGridLayout *gridLayout = new QGridLayout(this);
+    gridLayout = new QGridLayout(this);
 
     QLabel *name_label = new QLabel("Name", this);
     gridLayout->addWidget(name_label, 0, 0);
