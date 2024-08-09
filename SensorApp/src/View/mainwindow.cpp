@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QSpacerItem>
 #include <QIcon>
+#include <QMessageBox>
 #include "Sensor/TemperatureSensor.h"
 #include "Sensor/CO2Sensor.h"
 #include "Sensor/HumiditySensor.h"
@@ -17,15 +18,15 @@ MainWindow::MainWindow(QWidget *parent)
     mainGridLayout = new QGridLayout(centralWidget);
 
     // Sensor Search Widget
-    sensorSearchWidget = new SearchWidget(centralWidget);
-    mainGridLayout->addWidget(sensorSearchWidget, 0, 3, 3, 1);
-    connect(sensorSearchWidget, &SearchWidget::addButtonClicked, this, &MainWindow::openAddDialog);
-
+    searchWidget = new SearchWidget(centralWidget);
+    mainGridLayout->addWidget(searchWidget, 0, 3, 3, 1);
+    connect(searchWidget, &SearchWidget::sensorSelected, this, &MainWindow::handleSensorSelection);
+    connect(searchWidget, &SearchWidget::addButtonClicked, this, &MainWindow::openAddDialog);
 
     // Sensor Details Widget
-    sensorDetailsWidget = new DetailsWidget(centralWidget);
-    mainGridLayout->addWidget(sensorDetailsWidget, 0, 0, 1, 2);
-    connect(sensorDetailsWidget, &DetailsWidget::editButtonClicked, this, &MainWindow::openEditDialog);
+    detailsWidget = new DetailsWidget(centralWidget);
+    mainGridLayout->addWidget(detailsWidget, 0, 0, 1, 2);
+    connect(detailsWidget, &DetailsWidget::editButtonClicked, this, &MainWindow::openEditDialog);
 
     // Graph Widget
     graphWidget = new GraphWidget(centralWidget);
@@ -90,25 +91,33 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-
     // Esempio di aggiunta di un sensore al vettore
-    sensors.push_back(std::make_unique<CO2Sensor>());
-    sensors.push_back(std::make_unique<HumiditySensor>());
-    sensors.push_back(std::make_unique<TemperatureSensor>());
+    sensors.push_back(new CO2Sensor("CO2 Sensor", "Monitors CO2 levels", 95.0, "", "Living Room"));
+    sensors.push_back(new HumiditySensor("Humidity Sensor", "Monitors humidity levels", 90.0, "", "Basement", 20.0, 60.0));
+    sensors.push_back(new TemperatureSensor("", "Monitors temperature levels", 85.0, "°F", "Kitchen"));
+
 
     // Popolare il SearchWidget con i sensori
-    sensorSearchWidget->updateSensorList(sensors);
-
+    searchWidget->updateSensorList(sensors);
 }
 
 MainWindow::~MainWindow() {
-    // Destructor
+    for (auto sensor : sensors) {
+        delete sensor;
+    }
+    sensors.clear();
 }
 
+
 void MainWindow::openEditDialog() {
-    if (!editDialog) {
-        editDialog.reset(new EditDialog(*sensors[0], this));
+    handleSensorSelection();
+
+    if (!selectedSensor) {
+        QMessageBox::warning(this, "No Selection", "Please select a sensor to edit.");
+        return;
     }
+
+    editDialog.reset(new EditDialog(selectedSensor, this));
     editDialog->exec();
 }
 
@@ -117,6 +126,18 @@ void MainWindow::openAddDialog() {
         addDialog.reset(new AddDialog(this));
     }
     addDialog->exec();
+}
+
+const std::vector<AbstractSensor*>& MainWindow::getSensors() const {
+    return sensors;
+}
+
+AbstractSensor* MainWindow::getSelectedSensor() const {
+    return selectedSensor;
+}
+
+void MainWindow::handleSensorSelection() {
+    selectedSensor = searchWidget->getSelectedSensor();
 }
 
 

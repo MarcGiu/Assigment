@@ -9,22 +9,22 @@
 class DetailsWidget : public QWidget {
     Q_OBJECT
 
-public:
-    DetailsWidget(QWidget *parent = nullptr);
+    private:
+        QGridLayout *DetailsGridLayout;
+        QPushButton *editButton;
+        QPushButton *deleteButton;
+        QLabel *sensorIdLabel;
+        QLabel *sensorNameLabel;
+        QLabel *sensorLocationLabel;
+        QLabel *sensorUnitLabel;
+        QLabel *sensorAccuracyLabel;
+        QLabel *sensorDescriptionLabel;
 
-signals:
-    void editButtonClicked();
+    public:
+        DetailsWidget(QWidget *parent = nullptr);
 
-private:
-    QGridLayout *DetailsGridLayout;
-    QPushButton *editButton;
-    QPushButton *deleteButton;
-    QLabel *sensorIdLabel;
-    QLabel *sensorNameLabel;
-    QLabel *sensorLocationLabel;
-    QLabel *sensorUnitLabel;
-    QLabel *sensorAccuracyLabel;
-    QLabel *sensorDescriptionLabel;
+    signals:
+        void editButtonClicked();
 };
 
 

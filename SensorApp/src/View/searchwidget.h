@@ -13,23 +13,29 @@
 class SearchWidget : public QWidget {
     Q_OBJECT
 
-public:
-    SearchWidget(QWidget *parent = nullptr);
-    void updateSensorList(const std::vector<std::unique_ptr<AbstractSensor>>& sensors);
+    private:
+        QGridLayout *sensorListLayout;
+        QLineEdit *searchLineEdit;
+        QPushButton *searchButton;
+        QPushButton *addButton;
+        QPushButton *filterButton;
+        QScrollArea *sensorScrollArea;
+        QWidget *sensorScrollAreaWidgetContents;
+        QVBoxLayout *sensorListVerticalLayout;
+        QListWidget *sensorList;
+        std::vector<AbstractSensor*> sensorPtrs;
+        AbstractSensor* selectedSensor = nullptr;
+        void handleSensorSelection();
 
-signals:
-    void addButtonClicked();
+    public:
+        SearchWidget(QWidget *parent = nullptr);
+        void updateSensorList(const std::vector<AbstractSensor*>& sensors);
+        AbstractSensor* getSelectedSensor() const;
 
-private:
-    QGridLayout *sensorListLayout;
-    QLineEdit *searchLineEdit;
-    QPushButton *searchButton;
-    QPushButton *addButton;
-    QPushButton *filterButton;
-    QScrollArea *sensorScrollArea;
-    QWidget *sensorScrollAreaWidgetContents;
-    QVBoxLayout *sensorListVerticalLayout;
-    QListWidget *sensorList;
+    signals:
+        void addButtonClicked();
+        void sensorSelected();
+
 };
 
 

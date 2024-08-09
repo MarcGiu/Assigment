@@ -21,6 +21,7 @@ SOURCES += \
     View/searchwidget.cpp \
     View/sensordetailvisitor.cpp \
     View/sensorfieldvisitor.cpp \
+    View/sensorupdatevisitor.cpp \
     main.cpp
 
 
@@ -41,6 +42,7 @@ HEADERS += \
     View/searchwidget.h \
     View/sensordetailvisitor.h \
     View/sensorfieldvisitor.h \
+    View/sensorupdatevisitor.h \
     mainwindow.h
 
 # Default rules for deployment.

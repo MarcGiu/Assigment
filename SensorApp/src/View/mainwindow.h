@@ -7,6 +7,7 @@
 #include <QStatusBar>
 #include <QToolBar>
 #include <QAction>
+#include "Sensor/AbstractSensor.h"
 #include "searchwidget.h"
 #include "detailswidget.h"
 #include "graphwidget.h"
@@ -16,22 +17,15 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-private slots:
-    void openEditDialog();
-    void openAddDialog();
-
 private:
-    std::vector<std::unique_ptr<AbstractSensor>> sensors;
+    std::vector<AbstractSensor*> sensors;
+    AbstractSensor* selectedSensor;
 
     QWidget *centralWidget;
     QGridLayout *mainGridLayout;
 
-    SearchWidget *sensorSearchWidget;
-    DetailsWidget *sensorDetailsWidget;
+    SearchWidget *searchWidget;
+    DetailsWidget *detailsWidget;
     GraphWidget *graphWidget;
 
     QMenuBar *menuBar;
@@ -50,6 +44,17 @@ private:
 
     QScopedPointer<EditDialog> editDialog;
     QScopedPointer<AddDialog> addDialog;
+
+    void openEditDialog();
+    void openAddDialog();
+    void handleSensorSelection();
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+    const std::vector<AbstractSensor*>& getSensors() const;
+    AbstractSensor* getSelectedSensor() const;
+
 };
 
 #endif // MAINWINDOW_H

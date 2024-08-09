@@ -13,13 +13,13 @@ DetailsWidget::DetailsWidget(QWidget *parent)
     editButton->setToolTip("Edit sensor specifics");
     editButton->setIcon(QIcon(":/img/Assets/edit.png"));
     DetailsGridLayout->addWidget(editButton, 0, 2, 1, 1);
+    connect(editButton, &QPushButton::clicked, this, &DetailsWidget::editButtonClicked);
 
     deleteButton = new QPushButton(this);
     deleteButton->setText("Delete");
     deleteButton->setToolTip("Delete sensor");
     deleteButton->setIcon(QIcon(":/img/Assets/delete.png"));
     DetailsGridLayout->addWidget(deleteButton, 0, 3, 1, 1);
-    connect(editButton, &QPushButton::clicked, this, &DetailsWidget::editButtonClicked);
 
     // Sensor Details
     QLabel *idTextLabel = new QLabel(this);

@@ -6,6 +6,8 @@
 #include <QString>
 #include <QLabel>
 
+SensorDetailVisitor::SensorDetailVisitor(QGridLayout* layout, QWidget* itemWidget) : layout(layout), itemWidget(itemWidget) {}
+
 void SensorDetailVisitor::visitCO2(const CO2Sensor& sensor) {
     itemWidget->setStyleSheet("background-color: #D3D3D3");
     QLabel *iconLabel = new QLabel();

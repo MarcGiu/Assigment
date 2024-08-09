@@ -50,31 +50,51 @@ SearchWidget::SearchWidget(QWidget *parent)
     sensorListVerticalLayout->addWidget(sensorList);
     sensorScrollArea->setWidget(sensorScrollAreaWidgetContents);
     sensorListLayout->addWidget(sensorScrollArea, 2, 0, 1, 4);
+
+    connect(sensorList, &QListWidget::itemSelectionChanged, this, &SearchWidget::handleSensorSelection);
 }
 
-void SearchWidget::updateSensorList(const std::vector<std::unique_ptr<AbstractSensor>>& sensors) {
+void SearchWidget::updateSensorList(const std::vector<AbstractSensor*>& sensors) {
     sensorList->clear();
-        for (const std::unique_ptr<AbstractSensor>& sensor : sensors) {
+    sensorPtrs.clear();
 
-            QWidget *itemWidget = new QWidget();
+    for (AbstractSensor* sensor : sensors) {
+        sensorPtrs.push_back(sensor);
 
-            QGridLayout *gridLayout = new QGridLayout(itemWidget);
+        QWidget *itemWidget = new QWidget();
+        QGridLayout *gridLayout = new QGridLayout(itemWidget);
 
-            SensorDetailVisitor detailVisitor(gridLayout, itemWidget);
-            sensor->accept(detailVisitor);
+        SensorDetailVisitor detailVisitor(gridLayout, itemWidget);
+        sensor->accept(detailVisitor);
 
-            QLabel* nameLabel = new QLabel(QString("%1").arg(sensor->getName()));
-            nameLabel->setStyleSheet("font-weight: bold; font-size: 14px;");
-            QLabel* idLabel = new QLabel(QString("Id: %1").arg(sensor->getId()));
-            QLabel* accLabel = new QLabel(QString("Accuracy: %1").arg(sensor->getAccuracy()));
-            QLabel* locLabel = new QLabel(QString("Location: %1").arg(sensor->getLocation()));
-            gridLayout->addWidget(nameLabel, 0, 4, 1, 8);
-            gridLayout->addWidget(idLabel, 1, 4, 1, 8);
-            gridLayout->addWidget(accLabel, 2, 4, 1, 8);
-            gridLayout->addWidget(locLabel, 3, 4, 1, 8);
+        QLabel* nameLabel = new QLabel(QString("%1").arg(sensor->getName()));
+        nameLabel->setStyleSheet("font-weight: bold; font-size: 14px;");
+        QLabel* idLabel = new QLabel(QString("Id: %1").arg(sensor->getId()));
+        QLabel* accLabel = new QLabel(QString("Accuracy: %1").arg(sensor->getAccuracy()));
+        QLabel* locLabel = new QLabel(QString("Location: %1").arg(sensor->getLocation()));
+        gridLayout->addWidget(nameLabel, 0, 4, 1, 8);
+        gridLayout->addWidget(idLabel, 1, 4, 1, 8);
+        gridLayout->addWidget(accLabel, 2, 4, 1, 8);
+        gridLayout->addWidget(locLabel, 3, 4, 1, 8);
 
-            QListWidgetItem *listItem = new QListWidgetItem(sensorList);
-            listItem->setSizeHint(QSize(sensorList->width(), itemWidget->sizeHint().height()));
-            sensorList->setItemWidget(listItem, itemWidget);
-        }
+        QListWidgetItem *listItem = new QListWidgetItem(sensorList);
+        listItem->setSizeHint(QSize(sensorList->width(), itemWidget->sizeHint().height()));
+        sensorList->setItemWidget(listItem, itemWidget);
+    }
 }
+
+void SearchWidget::handleSensorSelection() {
+    QListWidgetItem *currentItem = sensorList->currentItem();
+    if (currentItem) {
+        int index = sensorList->row(currentItem);
+        selectedSensor = sensorPtrs.at(index);
+        emit sensorSelected();
+    }
+}
+
+AbstractSensor* SearchWidget::getSelectedSensor() const {
+    return selectedSensor;
+}
+
+
+
